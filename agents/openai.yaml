@@ -1,0 +1,6 @@
+interface:
+  display_name: "Format Music Release"
+  short_description: "Format music release folders from metadata"
+  default_prompt: "Use $format-music-release on this release or file path: <path>"
+policy:
+  allow_implicit_invocation: false
