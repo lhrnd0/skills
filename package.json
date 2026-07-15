@@ -1,8 +1,8 @@
 {
-  "name": "music-metadata-skills",
+  "name": "skills",
   "private": true,
   "version": "0.1.0",
-  "description": "Private skills repository for music archive workflows.",
+  "description": "Private repository for reusable Codex skills.",
   "scripts": {
     "list": "./scripts/list-skills.sh",
     "link": "./scripts/link-skills.sh"

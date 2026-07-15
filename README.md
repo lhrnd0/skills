@@ -1,6 +1,6 @@
-# Music Metadata Skills
+# Skills
 
-Private skills repository for music archive workflows.
+Private repository for reusable Codex skills.
 
 ## Skills
 
@@ -20,7 +20,7 @@ List available skills:
 ./scripts/list-skills.sh
 ```
 
-## Metadata Tools
+## Skill Requirements
 
 The `format-music-release` skill works best with:
 
