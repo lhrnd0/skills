@@ -1,0 +1,10 @@
+{
+  "name": "music-metadata-skills",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Private skills repository for music archive workflows.",
+  "scripts": {
+    "list": "./scripts/list-skills.sh",
+    "link": "./scripts/link-skills.sh"
+  }
+}
