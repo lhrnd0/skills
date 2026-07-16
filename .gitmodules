@@ -1,0 +1,3 @@
+[submodule "skills-private"]
+	path = skills-private
+	url = ../skills-private.git

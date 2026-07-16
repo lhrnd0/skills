@@ -6,7 +6,7 @@ target_root="${CODEX_HOME:-$HOME/.codex}/skills"
 
 mkdir -p "$target_root"
 
-find "$repo_root/skills" -mindepth 3 -maxdepth 3 -name SKILL.md -print | sort | while read -r skill_file; do
+find "$repo_root/skills" "$repo_root/skills-private" -mindepth 3 -maxdepth 3 -name SKILL.md -print 2>/dev/null | sort | while read -r skill_file; do
   skill_dir="$(dirname "$skill_file")"
   skill_name="$(basename "$skill_dir")"
   target="$target_root/$skill_name"

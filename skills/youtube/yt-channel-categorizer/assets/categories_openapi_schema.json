@@ -1,0 +1,143 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "YouTube Subscription Categorizer (YSC) Data",
+    "version": "1.0.0",
+    "description": "Schema for the YSC user data blob. Category names (e.g. \"3d\", \"ai\", \"music\") are dynamic: the same set of keys appears as top-level arrays of channel IDs and as entries inside `ysc_collection` and `ysc_meta`."
+  },
+  "paths": {
+    "/ysc": {
+      "get": {
+        "summary": "Get the full YSC data blob",
+        "responses": {
+          "200": {
+            "description": "YSC data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/YscData"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ChannelId": {
+        "type": "string",
+        "description": "YouTube channel ID (UC-prefixed).",
+        "pattern": "^UC[A-Za-z0-9_-]{22}$",
+        "example": "UCSMOQeBJ2RAnuFungnQOxLg"
+      },
+      "ChannelIdList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ChannelId"
+        }
+      },
+      "CategoryName": {
+        "type": "string",
+        "description": "A user-defined category label (dynamic key).",
+        "example": "art & culture"
+      },
+      "YscCollection": {
+        "type": "object",
+        "description": "Map of category name → category name. Keys are dynamic and define the canonical set of category names used elsewhere in the document.",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/CategoryName"
+        }
+      },
+      "YscMetaEntry": {
+        "type": "object",
+        "properties": {
+          "img": {
+            "type": "string",
+            "description": "Relative path to the category icon.",
+            "example": "/icon/new_pack/_52.png"
+          }
+        },
+        "required": ["img"]
+      },
+      "YscMeta": {
+        "type": "object",
+        "description": "Map of category name → metadata. Keys are dynamic.",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/YscMetaEntry"
+        }
+      },
+      "YscPopup": {
+        "type": "object",
+        "description": "Map of popup/promo flag name → seen/dismissed boolean. Keys are dynamic (e.g. \"namebf25\", \"nameny26\").",
+        "additionalProperties": {
+          "type": "boolean"
+        }
+      },
+      "YscSubGroups": {
+        "type": "object",
+        "description": "Map of category name → sub-group configuration. Keys are dynamic and mirror category names. Values are currently empty objects.",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "YscSettings": {
+        "type": "object",
+        "properties": {
+          "chh": { "type": "boolean" },
+          "hide_amount_new_videos": { "type": "boolean" },
+          "hide_main_page": { "type": "boolean" },
+          "install_date": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp in milliseconds.",
+            "example": 1732665420339
+          },
+          "lang": { "type": "string", "example": "en" },
+          "left_view": { "type": "string", "example": "highlight" },
+          "position": { "type": "integer", "example": 1 },
+          "referral": { "type": "string" },
+          "remove_filters": { "type": "boolean" },
+          "sdest": { "type": "string", "example": "home" },
+          "sort_type": { "type": "string", "example": "az" },
+          "source": { "type": "string" },
+          "sub_groups": {
+            "$ref": "#/components/schemas/YscSubGroups"
+          },
+          "sync_enable": { "type": "boolean" },
+          "uid": { "type": "string", "example": "834aa171d96ced581ce" },
+          "without_icons": { "type": "boolean" }
+        },
+        "required": ["install_date", "lang", "uid"]
+      },
+      "YscData": {
+        "type": "object",
+        "description": "Root object. Fixed keys are `ysc_collection`, `ysc_deck`, `ysc_meta`, `ysc_popup`, and `ysc_settings`. All other keys are dynamic category names whose values are arrays of channel IDs. The set of dynamic category keys at the root matches the keys of `ysc_collection` and `ysc_meta`.",
+        "properties": {
+          "ysc_collection": {
+            "$ref": "#/components/schemas/YscCollection"
+          },
+          "ysc_deck": {
+            "type": "array",
+            "items": {}
+          },
+          "ysc_meta": {
+            "$ref": "#/components/schemas/YscMeta"
+          },
+          "ysc_popup": {
+            "$ref": "#/components/schemas/YscPopup"
+          },
+          "ysc_settings": {
+            "$ref": "#/components/schemas/YscSettings"
+          }
+        },
+        "required": ["ysc_collection", "ysc_meta", "ysc_settings"],
+        "additionalProperties": {
+          "$ref": "#/components/schemas/ChannelIdList"
+        }
+      }
+    }
+  }
+}
