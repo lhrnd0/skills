@@ -5,6 +5,7 @@ Private repository for reusable Codex skills.
 ## Skills
 
 - [`format-music-release`](./skills/music/format-music-release/SKILL.md) - Format a music release folder or loose audio file path using archive rules and verified release metadata.
+- [`key-insights`](./skills/content/key-insights/SKILL.md) - Distill the key insights from a blog post, article, or YouTube video into grounded, non-obvious takeaways.
 - [`yt-channel-categorizer`](./skills/youtube/yt-channel-categorizer/SKILL.md) - Fetch YouTube channel metadata and categorize channel IDs.
 
 ## Private Skills
@@ -46,14 +47,4 @@ List available skills:
 
 ## Skill Requirements
 
-The `format-music-release` skill works best with:
-
-```sh
-brew install flac ffmpeg exiftool
-```
-
-The `yt-channel-categorizer` skill requires:
-
-```sh
-brew install jq yt-dlp
-```
+Each skill documents its own setup requirements in its `README.md`.
