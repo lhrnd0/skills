@@ -16,6 +16,7 @@ trap 'rm -rf "$workdir"' EXIT
 sub_langs="${LANG_PREF},${LANG_PREF}.*,${LANG_PREF}-orig,en,en.*"
 
 fetch() {
+  unset SSLKEYLOGFILE
   yt-dlp --skip-download "$1" \
     --sub-langs "$sub_langs" --sub-format vtt \
     -o "$workdir/sub.%(ext)s" "$URL" >/dev/null 2>&1 || true

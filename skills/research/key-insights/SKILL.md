@@ -18,7 +18,7 @@ Distill an article or video down to its **insights** — the transferable claims
 
 2. **Distill the insights** per the rubric below. Completion criterion: every listed insight passes all three tests, the anchors span the source front to back (a video's last anchor sits near its final timestamp, proving the whole thing was read), and no bullet merely recaps what the source is about.
 
-3. **Report** in the output format below.
+3. **Report.** First ask whether the user wants the output written to a file or printed to the screen. If a file, slugify the title and create `<title-slug>.md`; otherwise print to the screen. Either way, use the output format below.
 
 ## What counts as an insight
 
