@@ -39,7 +39,7 @@ brew install flac ffmpeg exiftool
    - Bandcamp, label pages, artist pages, or distributor pages for direct release evidence.
    - Other sources only as supporting evidence.
 
-5. Build one metadata plan for the entire release before changing files. Include the shared release fields and the per-track title, artist, track number, and BPM. Mark optional unknown fields for omission; do not replace them with guesses or placeholder text.
+5. Build one metadata plan for the entire release before changing files. Include the shared release fields and the per-track title, artist, track number, and BPM. Consolidate researched genre and style classifications into the `GENRE` field according to the archive rules; do not write a `STYLE` field. Mark optional unknown fields for omission; do not replace them with guesses or placeholder text.
 
 6. Resolve the release name:
    - Use the folder format `[Label] Artist - Release Title (Year) [Catalog]`.
@@ -50,7 +50,7 @@ brew install flac ffmpeg exiftool
 
 8. Write the embedded metadata before or alongside the filesystem changes. Preserve the audio stream and source format; do not transcode merely to edit tags. Apply consistent shared fields to every track, embed the selected front cover in every tag-capable audio file, and remove stale or duplicate values for fields being normalized. For FLAC, apply the compatibility mappings in the archive rules exactly; do not rely on `ffprobe`'s normalized field names as proof that the stored Vorbis comments are correct.
 
-9. Verify every changed audio file using the format-native reader first and a different reader second. For FLAC, read the raw Vorbis comments and PICTURE blocks with `metaflac`, then cross-check with `ffprobe` or `exiftool`. Check exact stored names, values, and occurrence counts; required scalar fields must occur once, with no duplicate titles or conflicting aliases. Verify track/disc totals, compilation state, label/year/style compatibility fields, and exactly one selected front cover. Compare the pre-write and post-write FLAC STREAMINFO MD5 values and run `flac --test` on every file. Completion criterion: both readbacks match the plan, audio checksums are unchanged, integrity tests pass, filenames and folder name conform to the archive rules, and unrelated files remain untouched.
+9. Verify every changed audio file using the format-native reader first and a different reader second. For FLAC, read the raw Vorbis comments and PICTURE blocks with `metaflac`, then cross-check with `ffprobe` or `exiftool`. Check exact stored names, values, and occurrence counts; required scalar fields must occur once, with no duplicate titles or conflicting aliases. Verify track/disc totals, compilation state, the consolidated `GENRE` value, the absence of `STYLE`, label/year compatibility fields, and exactly one selected front cover. Compare the pre-write and post-write FLAC STREAMINFO MD5 values and run `flac --test` on every file. Completion criterion: both readbacks match the plan, audio checksums are unchanged, integrity tests pass, filenames and folder name conform to the archive rules, and unrelated files remain untouched.
 
 ## Output
 
