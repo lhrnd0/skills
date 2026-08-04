@@ -10,8 +10,8 @@ Distill an article or video down to its **insights** — the transferable claims
 ## Steps
 
 1. **Acquire the full source.** Identify the input and get its complete text in hand:
-   - **Article / blog URL** — fetch the page and extract the readable body. If the fetch returns navigation, boilerplate, a paywall stub, or truncated text instead of the full article, acquisition is incomplete: refetch, try a reader view, or ask the user to paste the text.
-   - **YouTube URL** — pull the transcript with `./assets/fetch_transcript.sh "<URL>"`, which prints the title and a `[MM:SS]`-stamped transcript. If it fails or needs adapting, read [references/youtube-transcript.md](references/youtube-transcript.md).
+   - **Article / blog URL** — run `defuddle parse "<URL>" --markdown` to fetch the page and extract its stripped-down readable body as Markdown. Check that the output contains the complete article rather than navigation, boilerplate, a paywall stub, or truncated text. If it does not, acquisition is incomplete: retry with another available reader/fetch method or ask the user to paste the text.
+   - **YouTube URL** — ensure the command has outbound HTTPS and DNS access, then pull the transcript with `./assets/fetch_transcript.sh "<URL>"`, which prints the title and a `[MM:SS]`-stamped transcript. In a network-restricted sandbox, request network permission and rerun the command outside the sandbox. If it still fails or needs adapting, read [references/youtube-transcript.md](references/youtube-transcript.md); do not interpret a network error as missing captions.
    - **Pasted text or local file** — use it directly.
 
    Completion criterion: the complete body or transcript is in hand. If acquisition fails, stop and report it — never distill from the title, description, or memory.

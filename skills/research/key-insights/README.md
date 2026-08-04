@@ -4,6 +4,7 @@ Distill the key insights from an article, blog post, or YouTube video — the tr
 
 ## Requirements
 
+- `defuddle` — for extracting stripped-down Markdown from article and blog URLs
 - `yt-dlp` — only for YouTube transcripts: `brew install yt-dlp`
 
-Articles, pasted text, and local files need no setup.
+Pasted text and local files need no setup.
