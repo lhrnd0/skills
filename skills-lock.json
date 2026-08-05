@@ -1,11 +1,11 @@
 {
   "version": 1,
   "skills": {
-    "writing-great-skills": {
+    "writing-for-agents": {
       "source": "mattpocock/skills",
       "sourceType": "github",
-      "skillPath": "skills/productivity/writing-great-skills/SKILL.md",
-      "computedHash": "4deb21855fb4deeeb1b8217b041faff003fd0c915d24a22f636851c520bc9c5c"
+      "skillPath": "skills/productivity/writing-for-agents/SKILL.md",
+      "computedHash": "29b5360d2a4539cd565d0dd683c4971dedb3c405e40038462e582282976eceb1"
     }
   }
 }
