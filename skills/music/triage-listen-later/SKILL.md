@@ -1,6 +1,6 @@
 ---
 name: triage-listen-later
-description: Triage Readwise Reader items tagged garimpo one at a time with release research, download-search suggestions, online acquisition links, and a download handoff.
+description: Triage Readwise Reader items tagged garimpo with release research, acquisition links, download notes, and optional local wishlist tracking.
 disable-model-invocation: true
 ---
 
@@ -98,7 +98,7 @@ Present one item using this structure. Omit unknown fields instead of filling th
 **Actions**
 
 - **Listen** — open the original source and keep this item active
-- **Download** — add `download`, save the download leads to the document note, move to Reader Inbox, and advance
+- **Download** — add `download`, save the leads to Reader and an existing local wishlist, move to Inbox, and advance
 - **Delete** — permanently delete the item from Reader and advance
 - **Next** — leave the item untouched and advance to another queue item
 - **More research** — deepen the release or acquisition search and keep this item active
@@ -116,34 +116,19 @@ Completion criterion: the source is open and Reader state is unchanged.
 
 ### Download
 
-Build this Markdown block from the verified report, omitting empty headings and unknown fields:
+1. Resolve the directory containing this `SKILL.md`. Check for `WISHLIST.md` directly inside that directory. Record whether it exists at the start of the action; treat absence as an opt-out and leave the filesystem unchanged. Read [the download record formats](references/download-records.md), then build the Reader note block and, when opted in, the wishlist entry from the verified report.
 
-```markdown
-<!-- triage-listen-later:download -->
-## Download lead
+   Completion criterion: the complete Reader note is ready, and an existing wishlist has one prepared entry keyed by the Reader document ID.
 
-**Identity:** {artist — track or release · version when relevant}
-**Original source:** [{source label}]({source_url})
-**Search suggestions:**
-- `{query}`
-- `{query}`
+2. Preserve the existing document note and upsert its marked download block. Include every useful link from the report. Add the exact `download` tag, retain `garimpo`, and move the document to Reader Inbox (`location: new`). Prefer an authenticated Readwise mutation tool that can update document notes. Otherwise, send `PATCH https://readwise.io/api/v3/update/{document_id}/` with the existing authentication and a JSON body containing the complete merged `notes` string; use the tag-specific tool for `download` so existing tags are preserved.
 
-**Find online:**
-- [{store or source}]({direct URL}) — {purchase, download, physical, or stream}
+   Fetch the document by ID and verify its full note, tags, and location before continuing.
 
-**Release context:** {release · year · label · catalog number · format, as supported}
-**Release evidence:**
-- [{database, artist, label, or distributor}]({URL}) — {what it supports}
+   Completion criterion: `location` is `new`; `garimpo` and `download` are present; and the note preserves its prior content and contains exactly one marked block with the presented search suggestions, links, release context, and confidence.
 
-**Match confidence:** {High | Medium | Low} — {brief basis or unresolved ambiguity}
-<!-- /triage-listen-later:download -->
-```
+3. When `WISHLIST.md` existed at the start of the action, upsert the prepared entry without changing unrelated content, then read the entry back from disk. Keep the original queued date when replacing an existing entry. Mark the document ID as handled for the current session only after every applicable write verifies. If any mutation, file edit, or verification fails, keep the item active and report the incomplete state without exposing credentials.
 
-Preserve the existing document note. Append the block with one blank line of separation; if the marked block already exists, replace that block in place instead of duplicating it. Include every useful link from the report. Add the exact `download` tag, retain `garimpo`, and move the document to Reader Inbox (`location: new`). Prefer an authenticated Readwise mutation tool that can update document notes. Otherwise, send `PATCH https://readwise.io/api/v3/update/{document_id}/` with the existing authentication and a JSON body containing the complete merged `notes` string; use the tag-specific tool for `download` so existing tags are preserved.
-
-Fetch the document by ID and verify its full note, tags, and location. Mark its ID as handled for the current session before advancing. If any mutation or verification fails, keep the item active and report the incomplete state without exposing credentials.
-
-Completion criterion: `location` is `new`; `garimpo` and `download` are present; the note preserves its prior content and contains exactly one marked block with the presented search suggestions, links, release context, and confidence; and the ID will not appear again in this or a later triage session.
+   Completion criterion: the ID will not appear again in this or a later triage session; and, when the wishlist opted in, it contains exactly one complete entry for the Reader document ID. When it opted out, no `WISHLIST.md` was created.
 
 ### Delete
 
