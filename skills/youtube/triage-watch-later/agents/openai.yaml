@@ -1,0 +1,6 @@
+interface:
+  display_name: "Watch Later Triage"
+  short_description: "Triage YouTube Watch Later one video at a time"
+  default_prompt: "Use $triage-watch-later to review my YouTube Watch Later queue."
+policy:
+  allow_implicit_invocation: false
