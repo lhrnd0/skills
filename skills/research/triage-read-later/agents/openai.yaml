@@ -1,0 +1,6 @@
+interface:
+  display_name: "Read Later Triage"
+  short_description: "Triage Readwise Reader one item at a time"
+  default_prompt: "Use $triage-read-later to review my Readwise Reader inbox."
+policy:
+  allow_implicit_invocation: false
