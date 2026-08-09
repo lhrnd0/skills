@@ -100,8 +100,7 @@ Present one item using this structure. Omit unknown fields instead of filling th
 - **Listen** — open the original source and keep this item active
 - **Download** — add `download`, save the download leads to the document note, move to Reader Inbox, and advance
 - **Delete** — permanently delete the item from Reader and advance
-- **Pass** — archive, remove `garimpo`, and advance
-- **Later** — move to Later, retain `garimpo`, and advance for this session
+- **Next** — leave the item untouched and advance to another queue item
 - **More research** — deepen the release or acquisition search and keep this item active
 ```
 
@@ -154,17 +153,11 @@ Advance only after the request returns HTTP `204`. On any other response, keep t
 
 Completion criterion: Reader returns HTTP `204` for the exact active document ID, and that ID is marked handled for the current session.
 
-### Pass
+### Next
 
-Move the document to `archive`, then remove the `garimpo` tag. Fetch the document by ID and verify both changes before advancing. If either mutation fails, keep the item active and report the incomplete state.
+Issue no Reader mutation for the active document. Add its ID only to the in-memory handled set for this session, then advance using the active selection mode. Its location, tags, notes, and all other Reader fields remain unchanged, so it may appear again in a future triage session.
 
-Completion criterion: `location` is `archive`, `garimpo` is absent, and the next item is not shown before both are true.
-
-### Later
-
-Move the document to `later`, retain `garimpo`, mark its ID as handled for the current session, and advance without refetching it into the active batch.
-
-Completion criterion: `location` is `later`, `garimpo` remains present, and the current session will not present the ID again.
+Completion criterion: no mutation request was issued for the active document, its ID is excluded for the rest of this session, and the next report is for a different eligible ID.
 
 ### More research
 
@@ -174,4 +167,4 @@ Completion criterion: the named ambiguity is resolved or the report identifies t
 
 ## Loop
 
-Use `· · ·` before the next report. Continue with the active selection mode, excluding document IDs tagged `download` or already handled during the session. Stop when no eligible `garimpo` items remain and summarize counts for Download, Delete, Pass, Later, and Listen.
+Use `· · ·` before the next report. Continue with the active selection mode, excluding document IDs tagged `download` or already handled during the session. Stop when no eligible `garimpo` items remain and summarize counts for Download, Delete, Next, and Listen.
