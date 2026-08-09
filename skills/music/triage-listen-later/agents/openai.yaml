@@ -1,0 +1,6 @@
+interface:
+  display_name: "Listen Later Triage"
+  short_description: "Research garimpo music and queue downloads"
+  default_prompt: "Use $triage-listen-later to review my garimpo music queue."
+policy:
+  allow_implicit_invocation: false
