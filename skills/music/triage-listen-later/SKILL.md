@@ -116,7 +116,7 @@ Completion criterion: the source is open and Reader state is unchanged.
 
 ### Download
 
-1. Resolve the directory containing this `SKILL.md`. Check for `WISHLIST.md` directly inside that directory. Record whether it exists at the start of the action; treat absence as an opt-out and leave the filesystem unchanged. Read [the download record formats](references/download-records.md), then build the Reader note block and, when opted in, the wishlist entry from the verified report.
+1. Resolve the user's current working directory for the active music archive. Check for `WISHLIST.md` directly inside that directory; do not look for it beside this `SKILL.md`. Record whether it exists at the start of the action; treat absence as an opt-out and leave the filesystem unchanged. Read [the download record formats](references/download-records.md), then build the Reader note block and, when opted in, the wishlist entry from the verified report.
 
    Completion criterion: the complete Reader note is ready, and an existing wishlist has one prepared entry keyed by the Reader document ID.
 
