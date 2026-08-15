@@ -52,6 +52,8 @@ brew install flac ffmpeg exiftool
 
 9. Verify every changed audio file using the format-native reader first and a different reader second. For FLAC, read the raw Vorbis comments and PICTURE blocks with `metaflac`, then cross-check with `ffprobe` or `exiftool`. Check exact stored names, values, and occurrence counts; required scalar fields must occur once, with no duplicate titles or conflicting aliases. Verify track/disc totals, compilation state, identical consolidated `GENRE` and `STYLE` values, label/year compatibility fields, and exactly one selected front cover. Compare the pre-write and post-write FLAC STREAMINFO MD5 values and run `flac --test` on every file. Completion criterion: both readbacks match the plan, audio checksums are unchanged, integrity tests pass, filenames and folder name conform to the archive rules, and unrelated files remain untouched.
 
+10. After the final path exists and verification succeeds, check the current working directory for `RECENT-RELEASES.md`. If it exists, add the release's final path relative to the directory containing `RECENT-RELEASES.md`, preserving the file's existing entry format; use a Markdown list item when the file has no established entry format. Keep an existing entry for that relative path instead of adding a duplicate. Completion criterion: when `RECENT-RELEASES.md` is present, it contains exactly one entry for the relative final release path.
+
 ## Output
 
 Report:
@@ -63,3 +65,4 @@ Report:
 - Tag readback result and any formats that could not store a requested field.
 - Any required metadata tools that were unavailable.
 - Any files intentionally left in place.
+- Whether `RECENT-RELEASES.md` was updated, already contained the final path, or was absent.
