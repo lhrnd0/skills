@@ -16,21 +16,45 @@ trap 'rm -rf "$workdir"' EXIT
 sub_langs="${LANG_PREF},${LANG_PREF}.*,${LANG_PREF}-orig,en,en.*"
 
 fetch() {
+  local mode="$1"
+  local log="$2"
   unset SSLKEYLOGFILE
-  yt-dlp --skip-download "$1" \
+  yt-dlp --skip-download "$mode" \
     --sub-langs "$sub_langs" --sub-format vtt \
-    -o "$workdir/sub.%(ext)s" "$URL" >/dev/null 2>&1 || true
+    -o "$workdir/sub.%(ext)s" "$URL" >"$log" 2>&1
+}
+
+report_fetch_error() {
+  local log="$1"
+  echo "Failed to fetch captions from YouTube." >&2
+  if grep -Eqi 'failed to resolve|name resolution|network is unreachable|connection (refused|reset)|timed out|unable to download' "$log"; then
+    echo "Network access failed. Allow outbound HTTPS/DNS access (or rerun with elevated network permission), then retry." >&2
+  fi
+  echo "yt-dlp diagnostics:" >&2
+  tail -20 "$log" >&2
 }
 
 # Human captions first, then auto-generated.
-fetch --write-subs
+human_log="$workdir/human.log"
+auto_log="$workdir/auto.log"
+human_status=0
+fetch --write-subs "$human_log" || human_status=$?
 vtt="$(ls "$workdir"/*.vtt 2>/dev/null | head -1 || true)"
 if [ -z "$vtt" ]; then
-  fetch --write-auto-subs
+  auto_status=0
+  fetch --write-auto-subs "$auto_log" || auto_status=$?
   vtt="$(ls "$workdir"/*.vtt 2>/dev/null | head -1 || true)"
 fi
 
 if [ -z "$vtt" ]; then
+  if [ "${auto_status:-0}" -ne 0 ]; then
+    report_fetch_error "$auto_log"
+    exit "$auto_status"
+  fi
+  if [ "$human_status" -ne 0 ]; then
+    report_fetch_error "$human_log"
+    exit "$human_status"
+  fi
   echo "No transcript/captions available for this video." >&2
   exit 1
 fi

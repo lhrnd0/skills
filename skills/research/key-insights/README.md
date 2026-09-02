@@ -4,6 +4,7 @@ Summarize an article, blog post, or YouTube video with a concise overview and th
 
 ## Requirements
 
+- `defuddle` — for extracting stripped-down Markdown from article and blog URLs
 - `yt-dlp` — only for YouTube transcripts: `brew install yt-dlp`
 
-Articles, pasted text, and local files need no setup.
+Pasted text and local files need no setup.
