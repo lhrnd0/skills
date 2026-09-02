@@ -1,0 +1,4 @@
+interface:
+  display_name: "Check Soulseek Ports"
+  short_description: "Verify local and public Soulseek ports"
+  default_prompt: "Use $check-soulseek-ports to verify whether my Soulseek listening and obfuscated ports are reachable."

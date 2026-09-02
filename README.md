@@ -4,6 +4,8 @@ Private repository for reusable Codex skills.
 
 ## Skills
 
+- [`check-port-availability`](./skills/network/check-port-availability/SKILL.md) - Check TCP port availability, local listeners, and public internet reachability.
+- [`check-soulseek-ports`](./skills/network/check-soulseek-ports/SKILL.md) - Verify SoulseekQt listening and obfuscated ports using the generic port availability workflow.
 - [`format-music-release`](./skills/music/format-music-release/SKILL.md) - Format a music release folder or loose audio file path using archive rules and verified release metadata.
 - [`key-insights`](./skills/research/key-insights/SKILL.md) - Distill the key insights from a blog post, article, or YouTube video into grounded, non-obvious takeaways.
 - [`triage-listen-later`](./skills/music/triage-listen-later/SKILL.md) - Triage Reader items tagged garimpo with music-release research and acquisition links.

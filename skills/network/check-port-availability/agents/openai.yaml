@@ -1,0 +1,4 @@
+interface:
+  display_name: "Check Port Availability"
+  short_description: "Check local and public TCP port reachability"
+  default_prompt: "Use $check-port-availability to verify whether TCP ports are listening locally and reachable from the internet."
