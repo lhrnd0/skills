@@ -1,6 +1,6 @@
 # key-insights
 
-Distill the key insights from an article, blog post, or YouTube video — the transferable claims worth keeping, each anchored back to the source.
+Summarize an article, blog post, or YouTube video with a concise overview and the transferable claims worth keeping, each anchored back to the source.
 
 ## Requirements
 

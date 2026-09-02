@@ -1,11 +1,11 @@
 ---
 name: key-insights
-description: Distill the key insights from long-form content. Use when the user shares an article or blog URL, a YouTube video or URL, or pastes text and asks for the key insights, main takeaways, or key points.
+description: Distill long-form content into a concise overview and anchored key insights. Use when the user shares an article or blog URL, a YouTube video or URL, or pastes text and asks for the key insights, main takeaways, key points, or a summary.
 ---
 
 # Key Insights
 
-Distill an article or video down to its **insights** — the transferable claims worth keeping. An insight is not a recap of what the source covers; it is a claim the reader can carry away and use.
+Turn long-form content into a concise overview plus **insights** — the transferable claims worth keeping. An insight is not a recap of what the source covers; it is a claim the reader can carry away and use.
 
 ## Steps
 
@@ -16,9 +16,13 @@ Distill an article or video down to its **insights** — the transferable claims
 
    Completion criterion: the complete body or transcript is in hand. If acquisition fails, stop and report it — never distill from the title, description, or memory.
 
-2. **Distill the insights** per the rubric below. Completion criterion: every listed insight passes all three tests, the anchors span the source front to back (a video's last anchor sits near its final timestamp, proving the whole thing was read), and no bullet merely recaps what the source is about.
+2. **Map and summarize the source front to back.** Identify its subject, central argument, substantive sections, and conclusion. Write a concise **overview** that describes the source as a whole, including its main thesis and scope, in two to four sentences. If it presents an explicit bounded list — ideas, categories, habits, principles, steps, or similar named entries — also record every item in source order for a **list overview**. A list overview is coverage, not distillation: summarize each item in one line even when it is obvious or not insightful.
 
-3. **Report.** Write the report in the source language when it is English or Portuguese; for every other source language, write it in English. First ask whether the user wants the output written to a file or printed to the screen. If a file, slugify the title and create `<title-slug>.md`; otherwise print to the screen. Either way, use the output format below.
+   Completion criterion: the overview accurately represents the full source rather than only its opening, every substantive section has been assessed, and every item in a bounded list has been accounted for exactly once.
+
+3. **Distill the insights** per the rubric below. Completion criterion: every listed insight passes all three tests, the anchors span the source front to back (a video's last anchor sits near its final timestamp, proving the whole thing was read), and no bullet merely recaps what the source is about.
+
+4. **Report.** Write the report in the source language when it is English or Portuguese; for every other source language, write it in English. First ask whether the user wants the output written to a file or printed to the screen. If a file, slugify the title and create `<title-slug>.md`; otherwise print to the screen. Either way, use the output format below.
 
 ## What counts as an insight
 
@@ -32,12 +36,25 @@ Extract as many as the source genuinely carries — a dense essay may yield a do
 
 ## Output format
 
-Lead with the source, then the insights:
+Lead with the source, then provide the overview and insights. For a source built around an explicit bounded list, follow the overview with a compact list overview. Preserve the source's order and account for every item; do not force the list overview entries to pass the insight tests.
 
 ```
 ## <Title> — <author or channel>
 <source URL>
 
+### Overview
+
+<Two to four sentences describing the source's subject, central thesis, scope, and conclusion.>
+
+### List overview
+
+1. **<item name>** — <one-line explanation>
+2. ...
+
+### Key insights
+
 - **<crisp claim>.** <one sentence of substance or why it matters.> — _<anchor>_
 - ...
 ```
+
+Omit `List overview` when the source is not organized around a bounded list. Always retain `Overview` and `Key insights`.
