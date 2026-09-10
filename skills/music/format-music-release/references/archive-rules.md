@@ -15,7 +15,7 @@ Set these fields for every track:
 | Catalog      | Label catalog number, preserving meaningful punctuation and spacing. Omit when genuinely unknown or not applicable.                                                                                                                                         |
 | Label        | Imprint that issued the specific release variant. Omit when unknown or self-released without a named imprint. For FLAC, write the same value to both `ORGANIZATION` and `LABEL` for reader compatibility.                                                   |
 | Year         | Four-digit year of the specific release variant. For FLAC, store the year in both `DATE` and `YEAR`; store a verified full date separately in `RELEASEDATE` as `YYYY-MM-DD`. Do not put the full date in `DATE`.                                            |
-| Track        | Disc-local track number plus total, such as `1/4`. Preserve vinyl positions such as `A1` in the filename, but use numeric embedded track numbers unless the tag format explicitly supports positions.                                                       |
+| Track        | Disc-local numeric track number plus total, such as `1/4`, for every release format, including vinyl. Use numeric track numbers in embedded metadata and filenames; do not use vinyl positions such as `A1`.                                                       |
 | BPM          | Verified or consistently analyzed tempo as a number. Omit rather than guess; do not silently round a known decimal value.                                                                                                                                   |
 | Genre        | Put all useful musical classification in `GENRE` for player compatibility. Prefer the most descriptive verified genres or styles over broad umbrella categories: for example, use `House; Deep House; Downtempo` instead of `Electronic` when those styles are supported by the evidence. Write one value, joining multiple classifications with `; `. Keep a broad category only when no more specific classification is verified or when it adds distinct, useful information. |
 | Style        | When `GENRE` is set, write one `STYLE` value containing the exact same semicolon-separated text. Never leave `STYLE` empty or let it diverge from `GENRE`. Omit both fields when no classification is defensible. |
@@ -29,7 +29,7 @@ Title, Artist, Album Artist, Album, Year, Track, Disc Number, Compilation, and A
 
 Map canonical fields to the format's native tags where possible. Use conventional custom fields such as `CATALOGNUMBER` and `STYLE` when a container has no native equivalent. Treat researched source fields named genre, style, or subgenre as classification evidence, then consolidate the most descriptive supported terms into one `GENRE` value. Duplicate that exact value in `STYLE`: `GENRE` provides compatibility with software such as Rekordbox, while `STYLE` preserves the classification in readers that support it. When normalizing a release, replace stale or divergent `STYLE` data with the planned `GENRE` value. Preserve multi-value artist data when supported. The FLAC compatibility aliases above are intentional exceptions: keep their values identical and verify each alias explicitly. If a format cannot represent a field reliably, keep a sidecar only when one already exists or the user requests it, and report the limitation.
 
-Before writing, record the original tags and, for FLAC, the STREAMINFO MD5. Preserve unrelated useful fields such as ISRC, MusicBrainz identifiers, purchase metadata, and replay-gain values unless they conflict with verified release data. Never transcode audio to change metadata.
+Before writing, record the original tags and, for FLAC, the STREAMINFO MD5. Preserve unrelated useful fields such as ISRC, MusicBrainz identifiers, purchase metadata, and replay-gain values unless they conflict with verified release data.
 
 ## Verification
 
@@ -66,10 +66,9 @@ Preferred track filename patterns:
 
 ```text
 01 Artist - Track Title.flac
-A1 Artist - Track Title.aiff
 ```
 
-Prefer `.flac`, `.aiff`, and `.wav`. Keep `.mp3` and `.m4a` when they are the highest available source quality or already present.
+FLAC is the preferred archive format. Convert a verified lossless source to FLAC with lossless encoding, including PCM WAV/AIFF and lossless codecs such as ALAC. Keep an existing FLAC file as FLAC. Retain lossy sources, such as MP3, AAC, or a lossy M4A, in their original format because conversion cannot restore quality. Verify the source codec before conversion and compare decoded source and FLAC audio before removing the source file.
 
 ## Sidecars
 
