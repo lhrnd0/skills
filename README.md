@@ -4,6 +4,7 @@ Private repository for reusable Codex skills.
 
 ## Skills
 
+- [`brewfile-refresher`](./skills/homebrew/brewfile-refresher/SKILL.md) - Refresh a Brewfile from explicitly installed packages while preserving its categories, comments, and package history.
 - [`check-port-availability`](./skills/network/check-port-availability/SKILL.md) - Check TCP port availability, local listeners, and public internet reachability.
 - [`check-soulseek-ports`](./skills/network/check-soulseek-ports/SKILL.md) - Verify SoulseekQt listening and obfuscated ports using the generic port availability workflow.
 - [`format-music-release`](./skills/music/format-music-release/SKILL.md) - Format a music release folder or loose audio file path using archive rules and verified release metadata.

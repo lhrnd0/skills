@@ -1,0 +1,7 @@
+interface:
+  display_name: "Brewfile Refresher"
+  short_description: "Refresh Brewfiles while preserving their structure"
+  default_prompt: "Use $brewfile-refresher to refresh ./Brewfile."
+
+policy:
+  allow_implicit_invocation: false
