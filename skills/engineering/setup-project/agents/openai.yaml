@@ -1,0 +1,5 @@
+interface:
+  display_name: "Setup Project"
+  short_description: "Set up a repo for agent work"
+policy:
+  allow_implicit_invocation: false

@@ -9,6 +9,8 @@ Private repository for reusable Codex skills.
 - [`check-soulseek-ports`](./skills/network/check-soulseek-ports/SKILL.md) - Verify SoulseekQt listening and obfuscated ports using the generic port availability workflow.
 - [`format-music-release`](./skills/music/format-music-release/SKILL.md) - Format a music release folder or loose audio file path using archive rules and verified release metadata.
 - [`key-insights`](./skills/research/key-insights/SKILL.md) - Distill the key insights from a blog post, article, or YouTube video into grounded, non-obvious takeaways.
+- [`setup-issue-tracker`](./skills/engineering/setup-issue-tracker/SKILL.md) - Set up a repo's issue tracking: shared or local mode, and a beads, GitHub, GitLab or markdown tracker.
+- [`setup-project`](./skills/engineering/setup-project/SKILL.md) - Set up a repo for agent work; today it runs `setup-issue-tracker`.
 - [`tag-music-release`](./skills/music/tag-music-release/SKILL.md) - Guide a Rekordbox star rating and set-phase, mood, vibe, and instrument tags into tracks for Rekordbox search.
 - [`triage-listen-later`](./skills/music/triage-listen-later/SKILL.md) - Triage Reader items tagged garimpo with music-release research and acquisition links.
 - [`triage-read-later`](./skills/research/triage-read-later/SKILL.md) - Triage the Readwise Reader inbox one document at a time.

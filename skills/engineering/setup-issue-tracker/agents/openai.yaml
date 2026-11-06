@@ -1,0 +1,4 @@
+interface:
+  display_name: "Setup Issue Tracker"
+  short_description: "Set up a repo's issue tracker mode and tracker"
+  default_prompt: "Use $setup-issue-tracker to set up this repo's issue tracking."
