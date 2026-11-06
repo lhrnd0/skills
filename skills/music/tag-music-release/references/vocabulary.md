@@ -22,6 +22,7 @@ Where the track sits in a house or techno set.
 - Peak — the highest-energy section; biggest, most driving tracks.
 - Sustain — keep the floor energized without continually escalating; vary textures while holding intensity.
 - Release — ease the tension or provide emotional payoff; can reset the room before the next round/phase.
+- Tool — useful as a mixing or transition possibility, or not suited to play alone in a set.
 
 ## Mood
 

@@ -46,14 +46,14 @@ The genre round overrides `GENRE` and `STYLE`, which `format-music-release` sets
 
 Run one round per category, in this order: rating, genre, set phase, mood, vibes, instruments. Each round is one message to the user, then one answer back.
 
-1. Show the round, the numbered track list with each track's current value, and the category's full numbered vocabulary. Read the vocabulary from `references/vocabulary.md` at the start of every round, so new words appear.
+1. Show the round, the numbered track list with each track's current value, and the category's full numbered vocabulary. Always show every option's description alongside its name. Read the vocabulary from `references/vocabulary.md` at the start of every round, so new words appear.
 
    ```text
    Round 4 of 6: Mood (any number per track)
 
    Tracks: 1. Ngeke (Andhim Remix) [none]   2. Yeke Yeke [Happy]
 
-   1. Aggressive   2. Dark   3. Emotional / Introspective   4. Floating / Dreamy   5. Happy
+   1. Aggressive — forceful, intense, hard-hitting energy.   2. Dark — shadowy, ominous, moody, or heavy.   3. Emotional / Introspective — reflective, vulnerable, personal, or heartfelt.   4. Floating / Dreamy — hazy, atmospheric, weightless, and immersive.   5. Happy — bright, warm, playful, and uplifting.
 
    Reply with numbers or words, for all tracks or per track:
    all: 4   2: +5   — or a custom word, or skip
