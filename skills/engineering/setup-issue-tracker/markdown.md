@@ -24,14 +24,7 @@ Nothing beyond the shared sections.
 
 `templates/issue-tracker-markdown.md`.
 
-Frontmatter:
-
-```yaml
----
-mode: <shared|local>
-tracker: markdown
----
-```
+Identify markdown as the tracker in the contribution guide section for the chosen mode.
 
 ## Exclude lines (local)
 

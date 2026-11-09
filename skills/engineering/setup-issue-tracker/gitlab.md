@@ -22,14 +22,7 @@ None.
 
 `templates/issue-tracker-gitlab.md`. Leave the "MRs as a request surface" flag at **no** and do not raise it.
 
-Frontmatter:
-
-```yaml
----
-mode: <shared|local>
-tracker: gitlab
----
-```
+Identify GitLab as the tracker in the contribution guide section for the chosen mode.
 
 ## Exclude lines (local)
 

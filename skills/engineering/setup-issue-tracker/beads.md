@@ -81,15 +81,8 @@ Codex asks the user to trust a new project hook the first time it runs; mention 
 
 `templates/issue-tracker-beads.md`. Keep the block for the chosen mode between `<!-- shared -->` / `<!-- local -->` markers, delete the other block, and drop the marker lines. Replace `<sync-remote>` with the chosen sync remote; when sync is off, drop the **Sync** line.
 
-Frontmatter:
-
-```yaml
----
-mode: <shared|local>
-tracker: beads
-role: <maintainer|contributor>
----
-```
+Identify beads as the tracker in the contribution guide section for the chosen mode.
+Record the chosen role: `maintainer` or `contributor`.
 
 ## Exclude lines (local)
 

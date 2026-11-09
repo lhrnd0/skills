@@ -2,12 +2,12 @@
 
 ### Issue tracker
 
-Use GitHub Issues in `lhrnd0/skills`. See `docs/agents/issue-tracker.md`.
+For issue tracking, read [Issue tracker](CONTRIBUTING.md#issue-tracker).
 
 ### Triage labels
 
-Use the five default triage labels. See `docs/agents/triage-labels.md`.
+When applying triage roles, read [Triage labels](CONTRIBUTING.md#triage-labels).
 
 ### Domain docs
 
-Use the single-context layout. See `docs/agents/domain.md`.
+Before exploring, read [Domain docs](CONTRIBUTING.md#domain-docs).

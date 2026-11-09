@@ -1,7 +1,7 @@
 <!-- seed: mattpocock/skills setup-matt-pocock-skills v1.3.1/triage-labels.md. Drop this line when writing. -->
 # Triage Labels
 
-The skills speak in terms of five canonical triage roles. This file maps those roles to the actual label strings used in this repo's issue tracker.
+The skills speak in terms of five canonical triage roles. This table maps those roles to the actual label strings used in this repo's issue tracker.
 
 | Label in mattpocock/skills | Label in our tracker | Meaning                                  |
 | -------------------------- | -------------------- | ---------------------------------------- |
