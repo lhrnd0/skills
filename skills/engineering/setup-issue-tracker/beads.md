@@ -48,7 +48,7 @@ Claude and Codex get a SessionStart hook that primes bd, in both modes:
 
 Compare `git status --porcelain` with the snapshot. For every path bd added or changed:
 
-- **`CLAUDE.md`, `AGENTS.md`** (both modes) → discard bd's section: restore from the snapshot when the file existed, delete it when bd created it. The `## Agents workflow` block is the only change these files get.
+- **`CLAUDE.md`, `AGENTS.md`** (both modes) → discard bd's section: restore from the snapshot when the file existed, delete it when bd created it. Then preserve the instruction layout from the parent skill: shared workflow in `AGENTS.md`, with `@AGENTS.md` atop `CLAUDE.md`. Local mode leaves both shared files unchanged.
 - **shared**: keep everything else; it is committable setup. `.beads.gate.lock` is ignored by the root `.gitignore`.
 - **local**, file bd created → add it to the exclude lines.
 - **local**, tracked file bd changed:
@@ -104,7 +104,8 @@ Nothing to create: bd labels are free-form.
 - `bd info` succeeds and `bd ready` runs.
 - `bd dolt remote list` shows exactly the chosen remote, or none when sync is off; `bd config get sync.remote` matches.
 - `git config beads.role` prints the chosen role.
-- `CLAUDE.md` and `AGENTS.md` match the snapshot, apart from the `## Agents workflow` block.
+- `CLAUDE.md` and `AGENTS.md` match the snapshot, apart from the parent skill’s shared workflow and import changes.
+- The parent skill’s instruction-file checks pass in the chosen mode.
 - Claude hook: `bd prime --hook-json` (shared) or `bd prime --stealth --hook-json` (local) prints the context. Codex hook: `.codex/hooks.json` holds `bd codex-hook SessionStart`.
 - **shared**: beyond the snapshot, `git status --porcelain` shows only `.gitignore`, the `.beads/` setup files (`config.yaml`, `metadata.json`, `README.md`, `.gitignore`, `hooks/`), `.claude/settings.json`, `.codex/hooks.json`, `.codex/config.toml` and `.agents/skills/beads/`; no data directory. `git config core.hooksPath` points at `.beads/hooks`.
 - **local**: `git status --porcelain` matches the snapshot exactly. `git check-ignore` prints `.beads` and every excluded file; `git ls-files -v` shows `S` for every `--skip-worktree` file.

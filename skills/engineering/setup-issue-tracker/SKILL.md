@@ -16,9 +16,10 @@ This is a prompt-driven skill, not a script. Explore, present what you found, co
 
 | | shared | local |
 |---|---|---|
-| `## Agents workflow` block | `CLAUDE.md` or `AGENTS.md` (see **Pick the file** below) | `AGENTS.local.md`, plus `CLAUDE.local.md` holding the line `@AGENTS.local.md` |
+| `## Agents workflow` block | `AGENTS.md` | `AGENTS.override.md` |
+| Import at the top | `CLAUDE.md`: `@AGENTS.md` | `AGENTS.override.md`: `@AGENTS.md`; `CLAUDE.local.md`: `@AGENTS.override.md` |
 | Tracker docs | `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md` | `.issue-tracker/issue-tracker.md`, `.issue-tracker/triage-labels.md` |
-| Excluded from git | nothing | `AGENTS.local.md`, `CLAUDE.local.md`, `.issue-tracker/`, plus the tracker's own lines |
+| Excluded from git | nothing | `AGENTS.override.md`, `CLAUDE.local.md`, `.issue-tracker/`, plus the tracker's own lines |
 
 `issue-tracker.md` opens with frontmatter recording the choice (`mode`, `tracker`, and `role` for beads). That frontmatter is the marker of a configured repo.
 
@@ -31,10 +32,11 @@ Read whatever exists; assume nothing:
 - `git rev-parse --show-toplevel` and `git rev-parse --git-common-dir`. Not a git repo → stop and tell the user: local mode needs `.git/info/exclude`, and every tracker here assumes git.
 - `git remote -v`: which hosts (GitHub, GitLab, other), and which remotes belong to the user.
 - An existing setup: `docs/agents/issue-tracker.md` or `.issue-tracker/issue-tracker.md` and its frontmatter; an older one without frontmatter counts too.
-- `CLAUDE.md`, `AGENTS.md`, `AGENTS.local.md`, `CLAUDE.local.md` at the root, and any `## Agents workflow` block, or legacy `## Agent skills` block, in them.
+- Root instruction files: `AGENTS.md`, `CLAUDE.md`, `AGENTS.override.md`, `CLAUDE.local.md`, and legacy `AGENTS.local.md`.
+- Existing imports, `## Agents workflow` blocks, and legacy `## Agent skills` blocks in those files.
 - `<git-common-dir>/info/exclude`.
 - Tracker signs: `.beads/`, `.scratch/`, an issue-tracker line in the repo's own docs, open issues on the host (`gh issue list --limit 5` for GitHub, `glab issue list --per-page 5` for GitLab).
-- Is the `triage` skill installed (a `triage` skill folder, or `triage` among your available skills)? This decides whether step 4 runs.
+- Is the `triage` skill installed (a `triage` skill folder, or `triage` among your available skills)? Use this finding in step 4.
 
 ### 2. Present findings, then ask the mode
 
@@ -66,9 +68,16 @@ Repo already tracks work somewhere (its docs name GitHub Issues, open issues exi
 
 Then read the chosen tracker's procedure file and run its **Explore** and **Ask** sections.
 
-### 4. Triage labels
+### 4. Optional triage skill and labels
 
-Skip unless `triage` is installed. Ask exactly one question:
+If `triage` is missing, offer [Matt Pocock’s triage skill](https://github.com/mattpocock/skills/tree/main/skills/engineering/triage).
+Explain that it helps classify issues and prepare briefs for agents. Ask whether the user wants to install it.
+If they accept, use the available skill installer and include the skill’s supporting files.
+Respect the chosen mode: keep a local installation outside tracked project files or exclude its new paths.
+Verify that `triage` is available before configuring its labels.
+If they decline or installation fails, skip label configuration and continue tracker setup.
+
+When `triage` is available, ask:
 
 > Do you want to keep the default triage labels? (recommended: **yes**)
 
@@ -79,8 +88,9 @@ The defaults are the five canonical roles, each label equal to its name: `needs-
 Show the user a draft of every write:
 
 - The `## Agents workflow` block and the file it goes in.
+- The imports at the top of each instruction file, plus any legacy migration.
 - `issue-tracker.md` with its frontmatter, from the tracker's template in [templates/](templates/).
-- `triage-labels.md` (only when step 4 ran), from [templates/triage-labels.md](templates/triage-labels.md).
+- `triage-labels.md` (only when step 4 configured labels), from [templates/triage-labels.md](templates/triage-labels.md).
 - The exclude lines (local).
 - The tracker commands from its **Commands** section.
 
@@ -88,11 +98,26 @@ Let them edit before anything is written.
 
 ### 6. Write
 
-**Pick the file** (shared): if `CLAUDE.md` exists, edit it; else if `AGENTS.md` exists, edit it; if neither exists, ask the user which one to create. Edit only the file that already exists.
+**shared**: write the block to `AGENTS.md`. Create `CLAUDE.md` if absent, with `@AGENTS.md` as its first line.
 
-**local**: write the block to `AGENTS.local.md`. In `CLAUDE.local.md`, add the line `@AGENTS.local.md` once, keeping any other content.
+**local**: write the block to `AGENTS.override.md`, with `@AGENTS.md` as its first line.
+Create `CLAUDE.local.md` if absent, with `@AGENTS.override.md` as its first line.
+Keep the shared `AGENTS.md` and `CLAUDE.md` unchanged.
+If `AGENTS.md` is absent, retain the import without creating a shared file.
 
-An `## Agents workflow` block that already exists is updated in place, not duplicated. A legacy `## Agent skills` block (written by `setup-matt-pocock-skills`) is renamed to `## Agents workflow` and updated the same way. Leave the surrounding sections untouched.
+For each required import, move an existing copy to the first line or add it there.
+Keep exactly one copy of that import and preserve other content.
+
+Update an existing `## Agents workflow` block in place.
+Rename a legacy `## Agent skills` block to `## Agents workflow` when updating it.
+For older shared setups, move the tracker instructions from `CLAUDE.md` to `AGENTS.md`.
+For older local setups, move them from `AGENTS.local.md` to `AGENTS.override.md`.
+Replace `@AGENTS.local.md` in `CLAUDE.local.md` with the required import.
+Merge tracker instructions into one block in the destination.
+Preserve unrelated sections, including any inside a legacy block.
+Remove the old tracker instructions after moving them.
+If `AGENTS.local.md` becomes empty, remove it and its exclude line.
+Otherwise, preserve it and its exclusion. Import it once below `@AGENTS.md` in `AGENTS.override.md`.
 
 The block:
 
@@ -108,19 +133,24 @@ The block:
 [one-line summary of the label vocabulary]. See `<docs-dir>/triage-labels.md`.
 ```
 
-`<docs-dir>` is `docs/agents` (shared) or `.issue-tracker` (local). Include the `### Triage labels` sub-block, and write `triage-labels.md`, only when step 4 ran.
+`<docs-dir>` is `docs/agents` (shared) or `.issue-tracker` (local). Include the `### Triage labels` sub-block, and write `triage-labels.md`, only when step 4 configured labels.
 
 Write the docs from the templates: drop each `<!-- seed: ... -->` line, add the frontmatter the tracker procedure gives, and adjust the text to this repo (names, remotes).
 
 Then run the tracker's **Commands** and **Labels** sections.
 
-**local**: append each missing line to `<git-common-dir>/info/exclude` (the common dir, so every worktree shares it): `AGENTS.local.md`, `CLAUDE.local.md`, `.issue-tracker/`, plus the tracker's **Exclude lines**, including any new files its commands produced. Never add a line that is already there.
+**local**: append each missing line to `<git-common-dir>/info/exclude` (the common dir, so every worktree shares it): `AGENTS.override.md`, `CLAUDE.local.md`, `.issue-tracker/`, plus the tracker's **Exclude lines**, including any new files its commands produced. Never add a line that is already there.
 
 ### 7. Verify
 
 Done when every check passes:
 
-- The block exists once, in the file picked above.
+- The tracker instructions exist once: in `AGENTS.md` (shared) or `AGENTS.override.md` (local).
+- **shared**: `CLAUDE.md` starts with `@AGENTS.md`, present exactly once.
+- **local**: `AGENTS.override.md` starts with `@AGENTS.md`, present exactly once.
+- **local**: `CLAUDE.local.md` starts with `@AGENTS.override.md`, present exactly once.
+- Imports resolve when their targets exist; no import cycle exists.
+- Existing unrelated content remains intact after imports and legacy migrations.
 - `issue-tracker.md` frontmatter matches the choice.
 - **local**: `git status --porcelain` lists none of the written paths, and `git check-ignore` prints each one.
 - **shared**: `git status --porcelain` lists only the written paths and the tracker's setup files.
@@ -128,13 +158,17 @@ Done when every check passes:
 
 ### 8. Report
 
-Tell the user what was written and where, which commands ran, and that skills like `to-tickets`, `triage`, `to-spec` and `wayfinder` now read these files. Shared mode: the new files are ready to commit; committing is the user's call. Local mode: Claude Code loads `CLAUDE.local.md` on its own; other harnesses (Codex, OpenCode) do not read `AGENTS.local.md` yet.
+Tell the user what was written and where, which commands ran, and that skills like `to-tickets`, `triage`, `to-spec` and `wayfinder` now read these files. Shared mode: the new files are ready to commit; committing is the user's call. Local mode: report `AGENTS.override.md` and the import chain from `CLAUDE.local.md` through it to `AGENTS.md`.
 
 ## Switching
 
 Mode switch, same tracker:
 
-- **shared → local**: move the docs from `docs/agents/` to `.issue-tracker/`, move the block from `CLAUDE.md`/`AGENTS.md` into `AGENTS.local.md`, add the exclude lines. Removing the committed files is a commit the user makes; say so.
-- **local → shared**: the reverse; remove the exclude lines this skill added.
+- **shared → local**: move the tracker docs to `.issue-tracker/` and the tracker instructions to `AGENTS.override.md`.
+  Apply the local imports and exclude lines. Preserve unrelated shared instructions.
+  Explain that removing tracked tracker instructions and docs requires a commit.
+- **local → shared**: move the tracker docs to `docs/agents/` and the tracker instructions to `AGENTS.md`.
+  Apply the shared import. Remove local imports and files only when no unrelated content needs them.
+  Remove this skill's exclude lines only for paths no longer used locally.
 
 Then re-run the tracker procedure, since some trackers change per mode (beads: stealth init and sync remote; markdown: `.scratch/` tracking). Tracker switch: run the new tracker's procedure from step 3; issues already in the old tracker stay there, so tell the user before moving on.
