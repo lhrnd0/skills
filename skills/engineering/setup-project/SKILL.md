@@ -1,6 +1,6 @@
 ---
 name: setup-project
-description: "Set up this repo for agent work: today its issue tracking (shared or local mode; beads, GitHub, GitLab or markdown). Run once per repo, or again to switch or repair."
+description: "Set up a repo for agent work with Backlog.md, GitHub, GitLab or markdown issue tracking in shared or local mode. Use again to switch or repair the setup."
 disable-model-invocation: true
 ---
 
